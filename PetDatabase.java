@@ -10,7 +10,7 @@ public class PetDatabase {
     static Scanner s = new Scanner(System.in);
     //methods
     private static int getUserChoice(){
-        System.out.printf("Pet Database Program%n%nWhat would you like to do?%n1) View all pets%n2) Add more pets%n3) Exit program%nYour choice: ");
+        System.out.printf("Pet Database Program%n%nWhat would you like to do?%n1) View all pets%n2) Add more pets%n3) Search pets by name%n4) Search pets by age%n5) Exit program%nYour choice: ");
         return s.nextInt();
     }
     private static void addPets(){
@@ -44,6 +44,39 @@ public class PetDatabase {
         printTableFooter(petCount);
     }
 
+    private static void searchPetsByName(){
+        System.out.print("Enter a name to search: ");
+        String name = s.next();
+        int id = 0;
+
+        printTableHeader();
+        for (Pet p: pets) {
+            if(p == null){
+                break;
+            }else if(p.getName().equals(name)){
+                printTableRow(id, p.getName(), p.getAge());
+                id++;
+            }
+        }
+        printTableFooter(id);
+
+    }
+    private static void searchPetsByAge(){
+        System.out.print("Enter age to search: ");
+        int age = s.nextInt();
+        int id = 0;
+        printTableHeader();
+        for (Pet p: pets) {
+            if (p == null) {
+                break;
+            } else if (p.getAge() == age) {
+                printTableRow(id, p.getName(), p.getAge());
+                id++;
+            }
+        }
+        printTableFooter(id);
+    }
+
     private static void printTableHeader(){
         System.out.printf("+----------------------+%n| ID | NAME     | AGE  |%n+----------------------+%n");
 
@@ -62,10 +95,12 @@ public class PetDatabase {
     //main
     public static void main(String[] args) {
         int x = 0;
-        while(x != 3){
+        while(x != 5){
             switch (x = getUserChoice()) {
                 case 1 -> showAllPets();
                 case 2 -> addPets();
+                case 3 -> searchPetsByName();
+                case 4 -> searchPetsByAge();
             }
         }
         System.out.println("Goodbye!");
@@ -73,12 +108,12 @@ public class PetDatabase {
 }
 //dataclass
 class Pet {
-        private String name;
-        private int age;
-        Pet(String name, int age){
-            this.name = name;
-            this.age = age;
-        }
+    private String name;
+    private int age;
+    Pet(String name, int age){
+        this.name = name;
+        this.age = age;
+    }
 
     public String getName() {
         return this.name;
