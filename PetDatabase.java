@@ -10,7 +10,7 @@ public class PetDatabase {
     static Scanner s = new Scanner(System.in);
     //methods
     private static int getUserChoice(){
-        System.out.printf("Pet Database Program%n%nWhat would you like to do?%n1) View all pets%n2) Add more pets%n3) Search pets by name%n4) Search pets by age%n5) Exit program%nYour choice: ");
+        System.out.printf("Pet Database Program%n%nWhat would you like to do?%n1) View all pets%n2) Add more pets%n3) Update an existing pet%n4) Remove an existing pet%n5) Search pets by name%n6) Search pets by age%n7) Exit program%nYour choice: ");
         return s.nextInt();
     }
     private static void addPets(){
@@ -43,7 +43,28 @@ public class PetDatabase {
         }
         printTableFooter(petCount);
     }
+    private static void updatePet(){
+        showAllPets();
 
+        System.out.print("Enter the pet ID to update: ");
+        int id = s.nextInt();
+
+        System.out.print("Enter new name and new age: ");
+        String name = s.next();
+        int age = s.nextInt();
+
+        pets[id].setName(name);
+        pets[id].setAge(age);
+    }
+
+    private static void deletePet(){
+        System.out.print("Enter the pet ID to delete: ");
+        int id = s.nextInt();
+        System.out.printf("%s %d",pets[id].getName(), pets[id].getAge());
+        pets[id].setName(null);
+        petCount--;
+
+    }
     private static void searchPetsByName(){
         System.out.print("Enter a name to search: ");
         String name = s.next();
@@ -95,12 +116,14 @@ public class PetDatabase {
     //main
     public static void main(String[] args) {
         int x = 0;
-        while(x != 5){
+        while(x != 7){
             switch (x = getUserChoice()) {
                 case 1 -> showAllPets();
                 case 2 -> addPets();
-                case 3 -> searchPetsByName();
-                case 4 -> searchPetsByAge();
+                case 3 -> updatePet();
+                case 4 -> deletePet();
+                case 5 -> searchPetsByName();
+                case 6 -> searchPetsByAge();
             }
         }
         System.out.println("Goodbye!");
